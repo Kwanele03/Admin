@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Gugu.Models;
@@ -21,7 +20,7 @@ namespace AppIncrements.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
-            //_emailVerifier = emailVerifier;
+            
         }
 
 
@@ -71,8 +70,7 @@ namespace AppIncrements.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Check if the email exists in the user database and generate a password reset token
-                // Send the password reset link to the user's email
+                // Check
 
                  var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user == null)
@@ -82,7 +80,6 @@ namespace AppIncrements.Controllers
                 }
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, token }, Request.Scheme);
-               // await _emailSender.SendEmailAsync(model.Email, "Reset Password", $"Please reset your password by <a href='{callbackUrl}'>clicking here</a>.");
 
                 ViewBag.StatusMessage = "Password reset link sent successfully!";
                 return View();
